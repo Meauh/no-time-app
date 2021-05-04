@@ -8,6 +8,7 @@ import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -51,6 +52,31 @@ public class MainActivity extends AppCompatActivity {
 
     private MediaPlayer mpReset;
     private MediaPlayer mpAlarm;
+
+    private AudioManager am;
+    private final AudioManager.OnAudioFocusChangeListener audioListener =  new AudioManager.OnAudioFocusChangeListener() {
+        @Override
+        public void onAudioFocusChange(int focusChange) {
+            if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT || focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK){
+                mpAlarm.pause();
+                mpAlarm.seekTo(0);
+            }
+            else if (focusChange == AudioManager.AUDIOFOCUS_GAIN){
+                mpAlarm.start();
+            }
+            else if (focusChange == AudioManager.AUDIOFOCUS_LOSS){
+                releaseplayer();
+            }
+        }
+    };
+
+    private MediaPlayer.OnCompletionListener OCL = new MediaPlayer.OnCompletionListener(){
+
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+            releaseplayer();
+        }
+    };
 
 
     @Override
@@ -241,5 +267,13 @@ public class MainActivity extends AppCompatActivity {
         anim.setDuration(duration);
         anim.setEvaluator(new ArgbEvaluator());
         anim.start();
+    }
+
+    private void releaseplayer() {
+        if (mpAlarm != null) {
+            mpAlarm.release();
+            mpAlarm = null;
+            am.abandonAudioFocus(audioListener);
+        }
     }
 }
