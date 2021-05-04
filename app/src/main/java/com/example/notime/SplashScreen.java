@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,13 +30,18 @@ public class SplashScreen extends AppCompatActivity {
         bit_logo = findViewById(R.id.bit_logo);
         no_time_text = findViewById(R.id.no_time_text);
 
+        Animation text_animation = AnimationUtils.loadAnimation(this, R.anim.text_animation);
+        Animation logo_animation = AnimationUtils.loadAnimation(this, R.anim.logo_animation);
+
+        no_time_text.setAnimation(text_animation);
+        bit_logo.setAnimation(logo_animation);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 Intent splashIntent = new Intent(SplashScreen.this, MainActivity.class);
                 startActivity(splashIntent);
-//                CustomIntent.customType(SplashScreen.this, "fadein-to-fadeout");
+//              CustomIntent.customType(SplashScreen.this, "fadein-to-fadeout");
                 finish();
             }
         },2000);
