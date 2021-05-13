@@ -9,16 +9,17 @@
     android:background="@color/green_700"
     android:clickable="true">
 
-<!--    <com.airbnb.lottie.LottieAnimationView-->
-<!--        app:lottie_rawRes="@raw/clock"-->
-<!--        app:lottie_autoPlay="true"-->
-<!--        app:lottie_loop="true"-->
-<!--        app:lottie_colorFilter="@color/white"-->
-<!--        android:alpha="0.7"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        android:layout_marginTop="25dp"-->
-<!--        android:layout_width="100dp"-->
-<!--        android:layout_height="100dp"/>-->
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/sand_clock"
+        app:lottie_rawRes="@raw/sand_clock"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="true"
+        app:lottie_speed="0.5"
+        android:alpha="0.7"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"/>
 
     <RelativeLayout
         android:id="@+id/innerLayout"

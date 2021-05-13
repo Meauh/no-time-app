@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTextViewCountdownMilis ;
     private TextView mTextViewResetCounter ;
     private TextView mTextViewAverage ;
+    private LottieAnimationView sand_clock;
 
     private CountDownTimer mCountDownTimer;
 
@@ -91,6 +93,8 @@ public class MainActivity extends AppCompatActivity {
         mTextViewCountdownMilis = findViewById(R.id.text_countdown_milis);
         mTextViewResetCounter = findViewById(R.id.reset_counter);
         mTextViewAverage = findViewById(R.id.average);
+        sand_clock =  findViewById(R.id.sand_clock);
+        sand_clock.setVisibility(View.GONE);
 
         bgPrimaryColor = getResources().getColor(R.color.green_700);
         bgSecondaryColor = getResources().getColor(R.color.red_400);
@@ -105,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         mMyLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sand_clock.setVisibility(View.VISIBLE);
                 if (mTimerRunning)
                 {
                     resetTimer();
@@ -172,6 +177,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startTimer() {
+        sand_clock.setSpeed(0.5f);
+        sand_clock.playAnimation();
         mCountDownTimer = new CountDownTimer(mTimeLeftInMilis , 10) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -184,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
+                sand_clock.setVisibility(View.GONE);
                 mTimerRunning = false;
                 Snackbar.make(mMyLayout, "Time's up !" ,BaseTransientBottomBar.LENGTH_LONG).show();
                 mTimeLeftInMilis=0;
@@ -195,11 +203,13 @@ public class MainActivity extends AppCompatActivity {
         mTimerRunning = true;
     }
     private void pauseTimer() {
+        sand_clock.pauseAnimation();
         mCountDownTimer.cancel();
         mTimerRunning = false;
-        Toast.makeText(this , "Time paused",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this , "Timer paused",Toast.LENGTH_SHORT).show();
     }
     private void resetTimer() {
+        sand_clock.setVisibility(View.GONE);
         mpReset.start();
         mCountDownTimer.cancel();
 //        Snackbar.make(mMyLayout, String.valueOf(moyReset) + "*" + String.valueOf(resetCounter) + "+" + String.valueOf(START_TIME_IN_MILIS-mTimeLeftInMilis/1000) + "/" + String.valueOf(resetCounter+1) ,BaseTransientBottomBar.LENGTH_SHORT).show();
@@ -267,6 +277,7 @@ public class MainActivity extends AppCompatActivity {
         anim.setDuration(duration);
         anim.setEvaluator(new ArgbEvaluator());
         anim.start();
+        sand_clock.setSpeed(1);
     }
 
     private void releaseplayer() {
