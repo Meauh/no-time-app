@@ -14,7 +14,7 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/timer"
-            app:lottie_speed="0.5"
+            app:lottie_speed="0.75"
             android:layout_above="@+id/no_time_text"
             app:lottie_rawRes="@raw/timer"
             app:lottie_colorFilter="@color/white"

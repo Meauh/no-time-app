@@ -49,7 +49,7 @@ public class SplashScreen extends AppCompatActivity {
 //              CustomIntent.customType(SplashScreen.this, "fadein-to-fadeout");
                 finish();
             }
-        },4000);
+        },3000);
 
     }
 }
