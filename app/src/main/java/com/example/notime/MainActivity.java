@@ -150,7 +150,15 @@ public class MainActivity extends AppCompatActivity {
                     dialog.setPositiveButton("Set", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            mMyLayout.setBackgroundColor(bgPrimaryColor);
                             START_TIME_IN_MILIS = input.getValue() * 1000;
+                            sand_clock.setVisibility(View.GONE);
+                            if(START_TIME_IN_MILIS < 3100){
+                                mMyLayout.setBackgroundColor(bgSecondaryColor);
+                            }
+                            else{
+                                mMyLayout.setBackgroundColor(bgPrimaryColor);
+                            }
                             mTimeLeftInMilis = START_TIME_IN_MILIS;
                             saveData();
                             updateTimerText();
@@ -177,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startTimer() {
+        sand_clock.setVisibility(View.VISIBLE);
         sand_clock.setSpeed(0.5f);
         sand_clock.playAnimation();
         mCountDownTimer = new CountDownTimer(mTimeLeftInMilis , 10) {
@@ -210,6 +219,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void resetTimer() {
         sand_clock.setVisibility(View.GONE);
+        sand_clock.pauseAnimation();
         mpReset.start();
         mCountDownTimer.cancel();
 //        Snackbar.make(mMyLayout, String.valueOf(moyReset) + "*" + String.valueOf(resetCounter) + "+" + String.valueOf(START_TIME_IN_MILIS-mTimeLeftInMilis/1000) + "/" + String.valueOf(resetCounter+1) ,BaseTransientBottomBar.LENGTH_SHORT).show();
